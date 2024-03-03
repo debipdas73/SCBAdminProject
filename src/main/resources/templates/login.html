@@ -1,0 +1,344 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#loginForm").submit(function(event){
+                event.preventDefault(); // Prevent the form from submitting normally
+                var username = $("#username").val();
+                var password = $("#password").val();
+                $.ajax({
+                    type: "POST",
+                    url: "/api/login",
+                    contentType: "application/json",
+                    data: JSON.stringify({ username: username, password: password }),
+                    success: function(response){
+                        console.log("sucess response");
+                        window.location.href = response;
+                    },
+                    error: function(xhr, status, error){
+                    	 console.log("error in respone time");
+                        $("#errorMessage").text(xhr.responseText);
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <h2>Login</h2>
+    <form id="loginForm">
+        <div>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username">
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password">
+        </div>
+        <div>
+            <button type="submit">Login</button>
+        </div>
+        <div id="errorMessage"></div>
+    </form>
+</body>
+</html> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function(){
+    	console.log("inside function");
+        $("#loginForm").submit(function(event){
+            event.preventDefault(); // Prevent the form from submitting normally
+            var username = $("#username").val();
+            var password = $("#password").val();
+            console.log("inside function"+username);
+            console.log("inside function"+password);
+            $.ajax({
+                type: "POST",
+                url: "/login",
+                data: { username: username, password: password },
+                success: function(response){
+                    // If login is successful, redirect to home page or perform other actions
+                    console.log("Login successful");
+                    window.location.href = "/home";
+                },
+                error: function(xhr, status, error){
+                    // If login fails, display error message
+                    console.error("Login error:", error);
+                    $("#errorMessage").text(xhr.responseText);
+                }
+            });
+        });
+    });
+</script>
+    
+</head> 
+<body>
+    <h2>Kindly Login to access the application !!</h2>
+    <div id="errorMessage" style="color: red;"></div>
+    <form id="loginForm">
+        <label for="username">Username:</label><br>
+        <input type="text" id="username" name="username" required><br>
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password" required><br><br>
+        <input type="submit" value="Login">
+    </form>
+</body>
+</html>
+
+
+ -->
+
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<title>Banking</title>
+
+<script>
+
+  // Generate a random CAPTCHA code
+
+  function generateCaptcha() {
+
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+    let captcha = '';
+
+    for (let i = 0; i < 6; i++) {
+
+      captcha += characters.charAt(Math.floor(Math.random() * characters.length));
+
+    }
+  
+    return captcha;
+
+  }
+ 
+
+  function initializeCaptcha() {
+
+    const captchaImage = document.getElementById('captchaImage');
+
+    const captchaCode = generateCaptcha();
+
+    captchaImage.value = captchaCode;
+
+    captchaImage.dataset.captcha = captchaCode;
+
+  }
+
+  function refreshCaptcha() {
+
+    initializeCaptcha();
+
+  }
+  function validateCaptcha() {
+	  const enteredCaptcha = document.getElementById('captchaInput').value;
+	  const captchaImage = document.getElementById('captchaImage').dataset.captcha;
+	  const submitButton = document.getElementById('submitButton'); 
+
+	  if (enteredCaptcha === captchaImage) {
+
+		  submitButton.disabled=false;
+	  } else {
+		  submitButton.disabled=true;
+	   alert('Wrong Security Code!');
+	    initializeCaptcha();
+	    
+        return false; 
+	  }
+	}
+  function validate() {
+	  const username = document.getElementById('username').value; 
+	  const password = document.getElementById('password').value; 
+	  if(username == "")
+		  alert("UserName should not empty!");
+	  if(password =="")
+		  alert("Password should not empty!");
+	  validateCaptcha();
+  }
+  window.addEventListener('load', initializeCaptcha);
+
+</script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#loginForm").submit(function(event){
+                event.preventDefault(); // Prevent the form from submitting normally
+                var username = $("#username").val();
+                var password = $("#password").val();
+                $.ajax({
+                    type: "POST",
+                    url: "/api/login",
+                    contentType: "application/json",
+                    data: JSON.stringify({ username: username, password: password }),
+                    success: function(response){
+                        console.log("sucess response");
+                        window.location.href = response;
+                    },
+                    error: function(xhr, status, error){
+                    	 console.log("error in respone time");
+                        $("#errorMessage").text(xhr.responseText);
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+
+<body>
+<!-- <div class="message-container">
+    <p th:if="${param.message}" th:text="${param.message}" class="message"></p>
+</div> -->
+
+	<div class="login-container">
+ <h2>Kindly Login to Access the application!!</h2>
+    <form id="loginForm">
+        <div>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username">
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password">
+        </div>
+        <div>
+            <button type="submit">Login</button>
+        </div>
+        <div id="errorMessage"></div>
+    
+      	
+			
+<p><a href="" >Forget Username / Password</a></p>
+		</form>
+
+	</div>
+	
+</body>
+
+</html>
+
+
+<style>
+body {
+	font-family: Arial, sans-serif;
+	background-color: #f1f1f1;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+}
+.ctext{
+margin-left: 14px;
+}
+/* #submitButton {
+  display: none;
+} */
+
+.login-container {
+	/* background-color: white; */
+	border-radius: 8px;
+	/* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+	padding: 20px;
+	width: 300px;
+	border-style: solid;
+}
+
+input {
+	width: 70%;
+	padding: 10px;
+	margin: 5px 0;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+}
+
+button {
+	width: 70%;
+	padding: 10px;
+	background-color: #007bff;
+	color: white;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+.captcha {
+font-family: Arial, sans-serif;
+	background-color:#b3cee5;
+	margin: 0;
+	padding: 0;
+	/* display: flex; */
+	justify-content: center;
+	align-items: center;
+	min-height: 30vh;
+	margin-top: 10px;
+	
+}
+.cap {margin-left: 14px;}
+
+input:required {
+  box-shadow: 4px 4px 20px rgba(200, 0, 0, 0);
+}
+input:required:focus {
+  border: 1px solid red;
+  outline: none;
+}
+
+input:required:hover {
+  opacity: 1;
+}
+
+</style>
+

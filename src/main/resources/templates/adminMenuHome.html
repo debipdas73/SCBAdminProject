@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+        /* Add your custom styles here */
+    </style>
+    
+    <style>
+        /* Define styles for the container */
+        #userTableContainer {
+            height: 400px; /* Set the desired height */
+           /*  width:500px; */
+            overflow: auto; /* Enable scrolling */
+        }
+
+        /* Styles for the update button */
+        .update-button {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+      <style type="text/css">
+             body{
+            background-size: 100%; 
+            background-color: #F0FFF0; 
+            color: orange;
+            font-size: 18px;
+            margin: 0 auto;
+            text-align: center;         
+            } 
+         /*    #search_box{width: 60px; position: relative; margin: 0 auto; transform: rotate(26deg)}
+            #search{width:10px; height: 10px; border: 3px solid #f5f5f5; border-radius: 10px; float: left;}
+            #cabe{width: 8px;display: block; border: 2px solid #fff;color: #f6f6f6; font-weight: bold; text-shadow: 2px 0px #fff; position: absolute; top: 6px; left: 13px; font-size: 16px; border-radius: 10px;}
+ */
+        </style> 
+    <style type="text/css">
+    .radio-buttons input[type="radio"] {
+    display: inline-block;
+    margin-right: 10px; /* Adjust spacing between radio buttons */
+}
+
+.radio-buttons label {
+    display: inline-block;
+}
+    /* Style for the user details table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+/* Style for table header */
+th {
+    background-color: #f2f2f2;
+    padding: 10px;
+    text-align: left;
+}
+
+/* Style for table rows */
+td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Style for alternate rows */
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Style for table header of sticky table */
+.sticky th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: #ffffff;
+}
+
+/* Style for sticky table */
+.sticky {
+    overflow-x: auto;
+}
+
+/* Hover effect for table rows */
+tr:hover {
+    background-color: #f2f2f2;
+}
+    
+    
+    
+    </style>
+    
+ <style>
+    form {
+        max-width: 400px;
+        margin: 0 auto;
+    }
+    div {
+        margin-bottom: 10px;
+    }
+    label {
+        display: inline-block;
+        width: 100px; /* Adjust the width as needed */
+    }
+    input, select {
+        width: calc(100% - 110px); /* Adjust the width to fit the container */
+        padding: 5px;
+        box-sizing: border-box;
+    }
+    button[type="submit"] {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        margin: 20px auto;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    button[type="submit"]:hover {
+        background-color: #0056b3;
+    }
+</style>
+ 
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Welcome, Admin!</h2>
+        <!-- Menu Links -->
+        <ul class="nav nav-pills">
+            <li class="nav-item">
+                <a class="nav-link" href="#" data-toggle="modal" data-target="#createUserModal">Add User</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" data-toggle="modal" data-target="#updateDeleteUserModal">Action Model</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" data-toggle="modal" data-target="#searchUserModal">Search User</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" data-toggle="modal" data-target="#enableDisableUserModal">Enable/Disable</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" data-toggle="modal" data-target="#displayUserDetailsModal">Display User Details</a>
+            </li>
+             <li class="nav-item">
+                <a class="nav-link" href="#" data-toggle="modal" data-target="#logoutModal">Logout Session</a>
+            </li>
+        </ul>
+        
+    </div>
+
+    <!-- Modals -->
+    <!-- Create User Modal -->
+    <div class="modal fade" id="createUserModal" tabindex="-1" role="dialog" aria-labelledby="createUserModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <form id="createAdminForm">
+                <div>
+            <label for="username">Name:</label>
+            <input type="text" id="name" name="username" required>
+        </div>
+        <div>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div>
+            <label for="userRole">Role:</label>
+            <input type="text" id="userRole" name="userRole" required>
+        </div>
+        <div>
+            <label for="dob">DateOfBirth:</label>
+            <input type="date" id="dob" name="dob" required>
+        </div>
+        <div>
+            <label for="gender">Gender:</label>
+            <input type="text" id="gender" name="role">
+        </div>
+        <div>
+            <label for="mobile_no">MobileNo:</label>
+            <input type="number" id="mobile_no" name="mobile_no" required>
+        </div>
+         <div>
+            <label for="city">City:</label>
+            <input type="text" id="city" name="city" required>
+        </div>
+         <div>
+            <label for="address1">Address:</label>
+            <input type="text" id="address1" name="address1" required>
+        </div>
+        <br></br>
+        <button type="submit">Submit</button>
+        </form>
+            </div>
+        </div>
+    </div>
+     
+    <!-- #displayUserDetailsModal Modal     ------------------------------------------------------------------------------------------------->
+    <div class="modal fade" id="displayUserDetailsModal" tabindex="-1" role="dialog" aria-labelledby="displayUserDetailsModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+           <div class="modal-content"> 
+            <p>User Details</p>
+             <div id="userTableContainer">
+         <table id="usersListModule" border="1">
+            <thead>
+                <tr>
+                   <th></th>
+                    <th>User ID</th>
+                    <th>Name</th>
+                    <th>UserName</th>
+                    <th>EmailId</th>
+                    <th>City</th>
+                    <th>MobileNo</th>
+                    <th>Role</th>
+                    
+                </tr>
+            </thead>
+            <tbody id="DetailsUsersTab">
+                
+            </tbody>
+        </table> 
+    </div> 
+
+    <!-- Edit User Form Popup -->
+     <div id="editUserModal" style="display: none;">
+       
+        <form id="editUserForm">
+            <div class="form-group">
+                <label for="editUserId">UserId</label>
+                <input type="text" class="form-control" id="editUserId" name="user_id" readonly>
+            </div>
+            <div class="form-group">
+                <label for="editName">Name:</label>
+                <input type="text" class="form-control" id="editName" name="name">
+            </div>
+            <div class="form-group">
+                <label for="editEmail">Email:</label>
+                <input type="email" class="form-control" id="editEmail" name="email">
+            </div>
+            <div class="form-group">
+                <label for="editUsername">UserName:</label>
+                <input type="text" class="form-control" id="editUsername" name="username" readonly>
+            </div>
+              <div class="form-group">
+                <label for="editCity">City:</label>
+                <input type="text" class="form-control" id="editCity" name="city">
+            </div>
+            <div class="form-group">
+                <label for="editMobileNo">MobileNo:</label>
+                <input type="text" class="form-control" id="editMobileNo" name="mobile_no">
+            </div>
+            
+            <div class="form-group">
+                <label for="editUserRole">Role</label>
+                <input type="text" class="form-control" id="editUserRole" name="userRole">
+            </div>
+          
+            <button type="submit" class="btn btn-primary">Update</button>
+        </form>
+    </div>  
+                
+           </div> 
+        </div>
+    </div>
+    <!-- -----------------------end-----------------------------------end-------------------------------------------- -->>
+    <!-- #searchUserModal Modal -->
+    <div class="modal fade" id="searchUserModal" tabindex="-1" role="dialog" aria-labelledby="searchUserModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <h1>User Details</h1>
+    <div id="search_box"><div id="search"></div><span id="cabe"></span></div>
+    <input type="text" id="userIdInput" placeholder="Enter User ID">
+    <button onclick="getUserDetails()">Get User Details</button>
+    <div id="userDetails"></div>
+               
+            </div>
+        </div>
+    </div>
+  <div class="modal fade" id="enableDisableUserModal" tabindex="-1" role="dialog" aria-labelledby="enableDisableUserModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+        
+     <div class="container">
+        <h1>User Status </h1>
+        <form id="updateStatusForm" action="/api/users/updateStatus" method="post">
+            <div class="form-group">
+                <label for="userSelect">Select User:</label>
+                <select class="form-control" id="userSelect" name="userId">
+                <option value="none" selected disabled hidden> Select User</option>
+                    <!-- Users will be dynamically inserted here -->
+                </select>
+            </div>
+             <div class="form-group">
+              CurrentStatus: <span id="userStatus"></span>
+            </div>
+            <div class="form-group">
+        <label>Status:</label>
+        <div>
+            <input type="radio" id="enableStatus" name="userStatus" value="ENABLE">
+            <label for="enableStatus">ENABLE</label>
+            <input type="radio" id="disableStatus" name="userStatus" value="DISABLE">
+            <label for="disableStatus">DISABLE</label>
+        </div>
+    </div>
+             <button type="submit" class="btn btn-primary" id="updateStatusButton">Update Status</button> 
+        </form>
+    </div>
+   
+         </div>
+        </div>
+    </div>
+    <!-- Logout  -->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <form id="logoutForm" action="/logout" method="post">
+    <!-- You can add any additional content here, such as a confirmation message -->
+    <button type="submit">Logout</button>
+     </form>
+            
+            </div>
+            </div>
+            </div>
+    
+    <!-------------------------------------------------------------------------------- Fetch All User details in lending page--> 
+    <p>User Details</p>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>UserId</th>
+                <th>Name</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Status</th>
+                 <th>UserRole</th>
+                 <th>City</th>
+              
+            </tr>
+        </thead>
+        <tbody id="userTableBody">
+            <!-- User details will be dynamically inserted here -->
+        </tbody>
+    </table>
+    
+   <!-- Modal for updating user details -->
+ <div class="modal fade" id="updateUserModal" tabindex="-1" role="dialog" aria-labelledby="updateUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+           <!--  <div class="modal-header">
+                <h5 class="modal-title" id="updateUserModalLabel">Update User</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div> -->
+         <!--    <div class="modal-body">
+                
+                <form id="editUserForm">
+                    <input type="hidden" id="editUserId">
+                    <div class="form-group">
+                        <label for="editName">Name:</label>
+                        <input type="text" class="form-control" id="editName" name="name">
+                    </div>
+                    <div class="form-group">
+                        <label for="editEmail">Email:</label>
+                        <input type="email" class="form-control" id="editEmail" name="email">
+                    </div>
+                    Add more input fields for other user details as needed
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </form>
+            </div> -->
+        </div>
+    </div>
+</div> 
+
+    <!-- End Fetch All User Details -->
+    <!-- Other Modals -->
+    <!-- Add modals for other actions here -->
+
+    <!-- JavaScript -->
+    <script>
+        // Add your JavaScript code here
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>//create user model
+        $(document).ready(function(){
+            $("#createAdminForm").submit(function(event){
+                event.preventDefault(); // Prevent the form from submitting normally
+            console.log("inside create user function");
+                // Get form data
+                var formData = {
+                		name: $("#name").val(),
+                    username: $("#username").val(),
+                    password: $("#password").val(),
+                    email: $("#email").val(),
+                    userRole: $("#userRole").val(),
+                    dob:$("#dob").val,
+                    gender:$("#gender").val(),
+                    mobile_no:$("#mobile_no").val,
+                    address1:$("#address1").val(),
+                    city:$("#city").val()
+                };
+                console.log("inside create user function 1");
+                // Send POST request to create admin account
+                $.ajax({
+                    type: "POST",
+                    url: "/admin/create",
+                    data: JSON.stringify(formData),
+                    contentType: "application/json",
+                    success: function(response){
+                        alert("New User created successfully");
+                        //window.location.href = response;
+                        // Optionally redirect or perform other actions after admin account creation
+                        setTimeout(function(){
+                            location.reload();
+                        }, 800);
+                    },
+                    error: function(xhr, status, error){
+                        alert("Error creating user account: " + xhr.responseText);
+                    }
+                });
+            });
+        });
+    </script>  
+   
+<script>
+        function getUserDetails() {
+            const userId = document.getElementById('userIdInput').value;
+            fetch(`/api/users/getUser/${userId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('User not found');
+                    }
+                    return response.json();
+                })
+                .then(user => {
+                    const userDetailsDiv = document.getElementById('userDetails');
+                    userDetailsDiv.innerHTML = `
+                        <p><strong>User ID:</strong> ${user.user_id}</p>
+                        <p><strong>Name:</strong> ${user.name}</p>
+                        <p><strong>Email:</strong> ${user.email}</p>
+                        <p><strong>Status:</strong> ${user.userStatus}</p>
+                        <p><strong>Status:</strong> ${user.userRole}</p>
+                        <!-- Add more user details as needed -->
+                        <button onclick="closePopup()">Close</button>
+                    `;
+                })
+                .catch(error => {
+                    const userDetailsDiv = document.getElementById('userDetails');
+                    userDetailsDiv.innerHTML = `<p>${error.message}</p>`;
+                });
+        }
+        
+        function closePopup() {
+            location.reload(); // Refresh the page
+        }
+    </script>
+
+<script>
+$(document).ready(function() {
+    // Fetch users and populate the dropdown
+    fetch('/api/users')
+        .then(response => response.json())
+        .then(users => {
+            const userSelect = document.getElementById('userSelect');
+            const userStatus = document.getElementById('userStatus');
+           // console.log("users list"+users);
+           /*  for (let i = 0; i < users.length; i++) {
+                console.log("User " + (i + 1) + ":", users[i]);
+            } */
+            users.forEach(user => {
+            //	console.log("User " +user );
+            	
+                const option = document.createElement('option');
+                option.value = user.user_id;
+                option.text = user.username;
+                userSelect.appendChild(option);
+            });
+            // Add event listener for user selection
+            userSelect.addEventListener('change', function() {
+                const selectedUserId = this.value;
+                const selectedUser = users.find(user => user.user_id === parseInt(selectedUserId));
+                console.log("Selected User:", selectedUser); // Log the selected user object
+                if (selectedUser && selectedUser.userStatus) {
+                    userStatus.textContent = selectedUser.userStatus;
+                } else {
+                    userStatus.textContent = 'User status not available';
+                }
+            });
+
+        })
+        .catch(error => console.error('Error fetching users:', error));
+});
+
+</script>
+
+
+    <script type="text/javascript">//Foe user status update javascript
+    document.getElementById('updateStatusForm').addEventListener('submit', function(event) {
+        const selectedStatus = document.querySelector('input[name="userStatus"]:checked');
+        if (!selectedStatus) {
+            event.preventDefault(); // Prevent form submission
+            alert('Please select a status.'); // Display error message
+        }
+    });
+ 
+    $(document).ready(function() {
+        // Add event listener for form submission
+        $('#updateStatusForm').submit(function(event) {
+            event.preventDefault(); // Prevent the form from submitting normally
+            
+            // Get form data
+            const formData = $(this).serialize();
+
+            // Submit form data using AJAX
+            $.post('/api/users/updateStatus', formData, function(response) {
+                alert(response); // Show success message
+                location.reload(); // Reload the page
+            }).fail(function(error) {
+                alert('Error updating status: ' + error.responseText); // Show error message
+            });
+        });
+    });
+
+    </script>
+    <script>
+        // Fetch user details from the REST API when the page is loaded
+        window.onload = function() {
+        	console.log("Fetch user details from the REST API when the page is loaded");
+            fetch('/api/users')
+                .then(response => response.json())
+                .then(users => {
+                    const userTableBody = document.getElementById('userTableBody');
+                    users.forEach(user => {
+                        const row = `
+                            <tr>
+                                <td>${user.user_id}</td>
+                                <td>${user.name}</td>
+                                <td>${user.username}</td>
+                                <td>${user.email}</td>
+                                <td>${user.userStatus}</td>
+                                <td>${user.userRole}</td>
+                                <td>${user.city}</td>
+                                <!-- Add more table data as needed -->
+                            </tr>`;
+                        userTableBody.innerHTML += row;
+                    });
+                })
+                .catch(error => console.error('Error fetching user details:', error));
+        };
+    </script>
+ <script>
+        // Function to handle the click event on the update button
+        function handleUpdateUser(userId) {
+            // Show the edit form popup
+            document.getElementById('editUserModal').style.display = 'block';
+            fetch(`/api/users/getUser/${userId}`)
+            .then(response => response.json())
+            .then(userDetails => {
+                document.getElementById('editUserId').value = userDetails.user_id;
+                document.getElementById('editName').value = userDetails.name;
+                document.getElementById('editEmail').value = userDetails.email;
+                document.getElementById('editUsername').value = userDetails.username;
+                document.getElementById('editCity').value = userDetails.city;
+                document.getElementById('editMobileNo').value = userDetails.mobile_no;
+                document.getElementById('editUserRole').value = userDetails.userRole;
+                
+                const editPageUrl = `/api/users/getUser/${userId}`; 
+                window.open(editPageUrl, 'Edit User', 'width=100,height=400');
+            })
+            .catch(error => console.error('Error fetching user details:', error));
+    }
+
+
+        // Fetch user details from the REST API
+       // window.onload = function() {
+            fetch('/api/users/details')
+                .then(response => response.json())
+                .then(usersDetails => {
+                 const DetailsUsersTab = document.getElementById('DetailsUsersTab');
+                 console.log("inside Fetch user details from the REST API");
+                /*    document.getElementById('usersListModule').innerHTML = ''; */
+                    usersDetails.forEach(showuser=> {
+                        const row = `
+                            <tr>
+                        	  <td><button class="update-button" onclick="handleUpdateUser(${showuser.user_id})">&#10151;</button></td>
+                                <td>${showuser.user_id}</td>
+                                <td>${showuser.name}</td>
+                                <td>${showuser.email}</td>
+                                <td>${showuser.username}</td>
+                                <td>${showuser.city}</td>
+                                <td>${showuser.mobile_no}</td>
+                                <td>${showuser.userRole}</td>
+
+                            </tr>`;
+                            DetailsUsersTab.innerHTML += row; 
+                        /* document.getElementById('usersListModule').innerHTML += row; */
+                    });
+                })
+                .catch(error => console.error('Error fetching user details:', error));
+       /*}*/;
+    </script>   
+ 
+  <!--  <script>
+  /*  document.addEventListener('DOMContentLoaded', function() { */
+    // Function to handle the click event on the update button
+    function handleUpdateUser(userId) {
+        fetch(`/api/users/getUser/${userId}`)
+            .then(response => response.json())
+            .then(userDetails => {
+                const editPageUrl = 'editUserForm.html'; // URL of the page containing the form
+                const popup = window.open(editPageUrl, '', 'width=600,height=400');
+
+                // Pass user details to the popup window
+                popup.onload = function() {
+                    popup.document.getElementById('editUserId').value = userDetails.user_id;
+                    popup.document.getElementById('editName').value = userDetails.name;
+                    popup.document.getElementById('editEmail').value = userDetails.email;
+                    popup.document.getElementById('editUsername').value = userDetails.username;
+                    popup.document.getElementById('editCity').value = userDetails.city;
+                    popup.document.getElementById('editMobileNo').value = userDetails.mobile_no;
+                    popup.document.getElementById('editUserRole').value = userDetails.userRole; 
+                };
+            })
+            .catch(error => console.error('Error fetching user details:', error));
+    }
+
+    // Fetch user details from the REST API
+    fetch('/api/users/details')
+        .then(response => response.json())
+        .then(usersDetails => {
+            const DetailsUsersTab = document.getElementById('DetailsUsersTab');
+            console.log("inside Fetch user details from the REST API");
+            usersDetails.forEach(showuser => {
+                const row = `
+                    <tr>
+                        <td>${showuser.user_id}</td>
+                        <td>${showuser.name}</td>
+                        <td>${showuser.email}</td>
+                        <td>${showuser.username}</td>
+                        <td>${showuser.city}</td>
+                        <td>${showuser.mobile_no}</td>
+                        <td>${showuser.userRole}</td>
+                        <td><button class="update-button" onclick="handleUpdateUser(${showuser.user_id})">&#8594;</button></td>
+                    </tr>`;
+                DetailsUsersTab.innerHTML += row;
+            });
+        })
+        .catch(error => console.error('Error fetching user details:', error));
+  
+</script> -->
+<script>
+document.getElementById('editUserForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent the form from submitting normally
+
+    // Collect updated data from form fields
+    const userId = document.getElementById('editUserId').value;
+    const name = document.getElementById('editName').value;
+    const email = document.getElementById('editEmail').value;
+    const username = document.getElementById('editUsername').value;
+    const city = document.getElementById('editCity').value;
+    const mobile_no = document.getElementById('editMobileNo').value;
+    const userRole = document.getElementById('editUserRole').value;
+    // Collect other updated data as needed
+
+    // Send HTTP POST request to backend
+    fetch(`api/users/update/${userId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ name: name, email: email,username:username,city:city,mobile_no: mobile_no,userRole:userRole  })
+        // Add other updated data to the body as needed
+    })
+    .then(response => {
+        if (response.ok) {
+            // Handle success response
+             alert('User updated successfully');
+                location.reload();
+            console.log('User updated successfully');
+            // Optionally, close the edit form popup or perform any other action
+        } else {
+            // Handle error response
+            alert("Failed to update user");
+            console.error('Failed to update user');
+        }
+    })
+    .catch(error => {
+        console.error('Error updating user:', error);
+    });
+});
+
+
+
+</script>
+   <!-- <script>//API logout
+        function logout() {
+            fetch('/api/logout', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({})
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Logout successful');
+                    window.location.href = '/login.html'; // Redirect to login page after logout
+                } else {
+                    alert('Failed to logout');
+                }
+            })
+            .catch(error => {
+                console.error('Error during logout:', error);
+                alert('An error occurred during logout');
+            });
+        }
+    </script> -->
+</body>
+</html>
